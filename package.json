@@ -1,0 +1,13 @@
+{
+  "name": "jobmaster-ai",
+  "version": "2.0.0",
+  "description": "JobMaster AI A++ Edition – Y2K Glassmorphic Autonomous Job Application Tracker",
+  "scripts": {
+    "start": "npx serve . -p 3000",
+    "dev": "npx serve . -p 3000",
+    "build": "echo 'Static site – no build required. Ready for Vercel static deploy.' && exit 0"
+  },
+  "keywords": ["job-tracker", "ai", "glassmorphism", "career"],
+  "author": "352fihi-beep",
+  "license": "MIT"
+}
