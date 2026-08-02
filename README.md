@@ -1,36 +1,28 @@
-# JobMaster AI A++ Edition 🚀
+# JobMaster AI A++ Edition v3.0
 
-**Y2K Glassmorphic Job Application Tracker with Floating AI**
+**Y2K Glassmorphic Career Command Center — Zero Mock / Template Data**
 
-The ultimate autonomous career command center. Fully featured job search, scoring, tailoring, application tracking, ML insights, email automation simulation, mock interview, and more — all wrapped in a stunning glassmorphic cyber UI.
-
-## Live Demo
-Open `index.html` or deploy to Vercel.
-
-## Features Implemented (A++ → S-tier)
-- Core autonomous pipeline simulation (search → score → apply → track)
-- Live Dashboard with real-time metrics, charts, alerts
-- Job Search with advanced filters, bulk actions, quality scores
-- Floating AI Assistant (draggable, resizable, persistent chat, voice, quick actions)
-- Applications Kanban + Table + Folders
-- Calendar Scheduler linked to follow-ups
-- Resume Builder with live preview + AI tailor simulation
-- Analytics with heatmaps, source performance, ML insights, dedup stats
-- Mock Interview Simulator (STAR coaching + scoring)
-- Settings (thresholds, stealth, theme, SMTP mock, local LLM toggle)
-- Logs & History
-- Glassmorphism + Accent customization + confetti milestones
-- Keyboard shortcuts (Ctrl+K AI, Ctrl+1/2 tabs)
-- Local storage persistence + export/import + hard delete
-- Zero-cost design ready for OpenRouter free models
+## Status
+- Frontend: Production glassmorphic UI with all 9 tabs + floating AI
+- **No mock data**: starts completely empty
+- Job Search: live free public API (Arbeitnow) — real listings only
+- Operating modes: Manual / Hybrid / Autonomous (Part I of v3.0 spec)
+- Wheelhouse Guardrail structure ready
+- LocalStorage persists only real user actions
+- All 40 QoL items from Part XIV supported in structure
 
 ## Run
 ```bash
 npx serve .
-# or just open index.html
+# or open index.html
 ```
 
 ## Deploy
-Connect this repo to Vercel for instant static hosting.
+Connect repo to Vercel (static). `vercel.json` already present.
 
-Built to perfection. All core A++ features + high-ROI upgrades (ATS mock, company intel signals, interview sim, privacy toggles) present and performant.
+## Roadmap
+Follows the honest 8-phase plan in the v3.0 Production Specification.
+Next: Python backend + additional free sources + real LLM Wheelhouse verification + Android WebView APK with GitHub Actions proof artifacts.
+
+## License
+MIT
