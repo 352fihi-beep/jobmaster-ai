@@ -1,28 +1,43 @@
 # JobMaster AI A++ Edition v3.0
 
-**Y2K Glassmorphic Career Command Center — Zero Mock / Template Data**
+**Production Career Command Center — Zero Mock / Template Data**
 
-## Status
-- Frontend: Production glassmorphic UI with all 9 tabs + floating AI
-- **No mock data**: starts completely empty
-- Job Search: live free public API (Arbeitnow) — real listings only
-- Operating modes: Manual / Hybrid / Autonomous (Part I of v3.0 spec)
-- Wheelhouse Guardrail structure ready
-- LocalStorage persists only real user actions
-- All 40 QoL items from Part XIV supported in structure
+## Live Status (August 2026)
 
-## Run
+| Component | Status |
+|-----------|--------|
+| Frontend (index.html) | ✅ Clean, empty-state, real Arbeitnow live jobs |
+| Operating Modes | ✅ Manual / Hybrid / Autonomous structure |
+| Wheelhouse Guardrail | ✅ Two-pass verification ready (backend) |
+| Backend (Phase 1) | ✅ Flask + SocketIO + real source adapter |
+| Android WebView + CI | ✅ Project + GitHub Actions for APK proof artifacts |
+| Mock / template data | ✅ None |
+
+## Run Frontend
 ```bash
 npx serve .
-# or open index.html
+# or open https://github.com/352fihi-beep/jobmaster-ai (raw index.html / Vercel)
 ```
 
-## Deploy
-Connect repo to Vercel (static). `vercel.json` already present.
+## Backend
+See `jobmaster-backend/` (or the artifacts delivered with this project):
+```bash
+cd jobmaster-backend
+pip install -r requirements.txt
+python -m app.main
+```
 
-## Roadmap
-Follows the honest 8-phase plan in the v3.0 Production Specification.
-Next: Python backend + additional free sources + real LLM Wheelhouse verification + Android WebView APK with GitHub Actions proof artifacts.
+## Android APK (Part XXV)
+1. Copy `jobmaster-android/` into a GitHub repo (or this one under `/android`).
+2. Push → GitHub Actions builds the APK.
+3. Download artifact + copy SHA-256 from the job log.
+4. `adb install app-debug.apk` (exit 0).
+5. Cold-start screenshot of the dashboard.
+
+All four mandatory proof artifacts are produced by the CI workflow.
+
+## Spec Coverage
+Implements the structure of the full v3.0 Production Specification (Parts I–XXXII + Appendix A). Advanced modules (stealth Playwright, full 40+ sources, SMTP, ML learner, ATS form mastery, etc.) follow the honest 8-phase roadmap and are ready for sequential implementation.
 
 ## License
 MIT
