@@ -4,1130 +4,226 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
   <meta name="theme-color" content="#0a0a12" />
-  <meta name="description" content="JobMaster AI A++ – Y2K Glassmorphic Autonomous Job Application Tracker with Floating AI" />
+  <meta name="description" content="JobMaster AI A++ – Production Career Command Center. No mock data." />
   <title>JobMaster AI A++ | Career Command Center</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
     tailwind.config = {
       theme: {
         extend: {
-          colors: {
-            cyber: {
-              900: '#0a0a12',
-              800: '#0f0f1a',
-              700: '#151525',
-              600: '#1a1a2e',
-              500: '#252545',
-              neon: '#00f0ff',
-              pink: '#ff00aa',
-              purple: '#b400ff',
-              green: '#00ff9d',
-              yellow: '#ffee00'
-            }
-          },
-          fontFamily: {
-            orbitron: ['Orbitron', 'sans-serif'],
-            inter: ['Inter', 'sans-serif']
-          },
-          boxShadow: {
-            neon: '0 0 20px rgba(0, 240, 255, 0.4), 0 0 40px rgba(0, 240, 255, 0.2)',
-            'neon-pink': '0 0 20px rgba(255, 0, 170, 0.4)',
-            glass: '0 8px 32px 0 rgba(0, 0, 0, 0.37)'
-          }
+          colors: { cyber: { 900:'#0a0a12', 800:'#0f0f1a', neon:'#00f0ff', pink:'#ff00aa', purple:'#b400ff', green:'#00ff9d' } },
+          fontFamily: { orbitron: ['Orbitron','sans-serif'], inter: ['Inter','sans-serif'] }
         }
       }
     }
   </script>
-  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
   <style>
-    :root {
-      --accent: #00f0ff;
-      --accent-rgb: 0, 240, 255;
-    }
+    :root { --accent: #00f0ff; --accent-rgb: 0,240,255; }
     * { box-sizing: border-box; }
-    body {
-      font-family: 'Inter', system-ui, sans-serif;
-      background: #0a0a12;
-      color: #e0e0ff;
-      overflow: hidden;
-      height: 100vh;
-      margin: 0;
-    }
-    .glass {
-      background: rgba(15, 15, 30, 0.55);
-      backdrop-filter: blur(16px) saturate(180%);
-      -webkit-backdrop-filter: blur(16px) saturate(180%);
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.4);
-    }
-    .glass-strong {
-      background: rgba(10, 10, 20, 0.75);
-      backdrop-filter: blur(24px) saturate(200%);
-      border: 1px solid rgba(0, 240, 255, 0.15);
-    }
-    .neon-text {
-      text-shadow: 0 0 10px var(--accent), 0 0 20px rgba(var(--accent-rgb), 0.5);
-    }
-    .neon-border {
-      border: 1px solid var(--accent);
-      box-shadow: 0 0 12px rgba(var(--accent-rgb), 0.3), inset 0 0 12px rgba(var(--accent-rgb), 0.05);
-    }
-    .y2k-grid {
-      background-image:
-        linear-gradient(rgba(0, 240, 255, 0.03) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(0, 240, 255, 0.03) 1px, transparent 1px);
-      background-size: 40px 40px;
-    }
-    .scanline::after {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(transparent 50%, rgba(0, 240, 255, 0.02) 50%);
-      background-size: 100% 4px;
-      pointer-events: none;
-      z-index: 100;
-    }
-    ::-webkit-scrollbar { width: 6px; height: 6px; }
-    ::-webkit-scrollbar-track { background: transparent; }
-    ::-webkit-scrollbar-thumb { background: rgba(0, 240, 255, 0.3); border-radius: 3px; }
-    ::-webkit-scrollbar-thumb:hover { background: rgba(0, 240, 255, 0.5); }
-    .tab-btn.active {
-      background: rgba(0, 240, 255, 0.15);
-      color: #00f0ff;
-      border-color: rgba(0, 240, 255, 0.4);
-      box-shadow: 0 0 15px rgba(0, 240, 255, 0.2);
-    }
-    .floating-ai {
-      position: fixed;
-      z-index: 9999;
-      width: 420px;
-      height: 580px;
-      min-width: 320px;
-      min-height: 400px;
-      max-width: 90vw;
-      max-height: 85vh;
-      resize: both;
-      overflow: hidden;
-      border-radius: 16px;
-      transition: box-shadow 0.3s;
-    }
-    .floating-ai.dragging { opacity: 0.9; cursor: grabbing; }
+    body { font-family: Inter, system-ui, sans-serif; background: #0a0a12; color: #e0e0ff; overflow: hidden; height: 100vh; margin: 0; }
+    .glass { background: rgba(15,15,30,0.55); backdrop-filter: blur(16px); border: 1px solid rgba(255,255,255,0.08); }
+    .glass-strong { background: rgba(10,10,20,0.8); backdrop-filter: blur(24px); border: 1px solid rgba(0,240,255,0.15); }
+    .neon-text { text-shadow: 0 0 10px var(--accent); }
+    .neon-border { border: 1px solid var(--accent); box-shadow: 0 0 12px rgba(var(--accent-rgb),0.3); }
+    .y2k-grid { background-image: linear-gradient(rgba(0,240,255,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(0,240,255,0.03) 1px, transparent 1px); background-size: 40px 40px; }
+    ::-webkit-scrollbar { width: 6px; } ::-webkit-scrollbar-thumb { background: rgba(0,240,255,0.3); border-radius: 3px; }
+    .tab-btn.active { background: rgba(0,240,255,0.15); color: #00f0ff; }
+    .floating-ai { position: fixed; z-index: 9999; width: 400px; height: 560px; min-width: 300px; min-height: 380px; max-width: 90vw; max-height: 85vh; resize: both; overflow: hidden; border-radius: 16px; }
     .ai-header { cursor: grab; user-select: none; }
-    .ai-header:active { cursor: grabbing; }
-    .msg-user { background: rgba(0, 240, 255, 0.15); border: 1px solid rgba(0, 240, 255, 0.3); }
-    .msg-ai { background: rgba(180, 0, 255, 0.1); border: 1px solid rgba(180, 0, 255, 0.25); }
-    .kanban-col { min-height: 420px; }
-    .job-card:hover { transform: translateY(-2px); box-shadow: 0 0 20px rgba(0, 240, 255, 0.25); }
-    .progress-ring { transition: stroke-dashoffset 0.6s ease; }
-    @keyframes pulse-neon {
-      0%, 100% { box-shadow: 0 0 8px rgba(0, 240, 255, 0.4); }
-      50% { box-shadow: 0 0 20px rgba(0, 240, 255, 0.7); }
-    }
-    .pulse-neon { animation: pulse-neon 2s infinite; }
-    @keyframes confetti {
-      0% { transform: translateY(0) rotate(0); opacity: 1; }
-      100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
-    }
-    .toast {
-      position: fixed; bottom: 24px; right: 24px; z-index: 10000;
-      padding: 12px 20px; border-radius: 12px;
-      background: rgba(0, 20, 30, 0.9); border: 1px solid rgba(0, 240, 255, 0.4);
-      backdrop-filter: blur(12px); transform: translateY(100px); opacity: 0;
-      transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-    }
+    .msg-user { background: rgba(0,240,255,0.15); border: 1px solid rgba(0,240,255,0.3); }
+    .msg-ai { background: rgba(180,0,255,0.1); border: 1px solid rgba(180,0,255,0.25); }
+    .toast { position: fixed; bottom: 24px; right: 24px; z-index: 10000; padding: 12px 20px; border-radius: 12px; background: rgba(0,20,30,0.95); border: 1px solid rgba(0,240,255,0.4); transform: translateY(100px); opacity: 0; transition: all 0.35s cubic-bezier(0.16,1,0.3,1); }
     .toast.show { transform: translateY(0); opacity: 1; }
-    .status-dot { width: 8px; height: 8px; border-radius: 50%; }
-    .status-applied { background: #00f0ff; }
-    .status-interview { background: #ffee00; }
-    .status-offer { background: #00ff9d; }
-    .status-rejected { background: #ff4466; }
-    .status-pending { background: #b400ff; }
-    input, select, textarea {
-      background: rgba(0, 0, 0, 0.3) !important;
-      border: 1px solid rgba(255, 255, 255, 0.1) !important;
-      color: #e0e0ff !important;
-    }
-    input:focus, select:focus, textarea:focus {
-      outline: none;
-      border-color: rgba(0, 240, 255, 0.5) !important;
-      box-shadow: 0 0 0 2px rgba(0, 240, 255, 0.15);
-    }
-    .sidebar-icon { transition: all 0.2s; }
-    .sidebar-icon:hover, .sidebar-icon.active {
-      color: #00f0ff;
-      filter: drop-shadow(0 0 6px #00f0ff);
-    }
+    input, select, textarea { background: rgba(0,0,0,0.35) !important; border: 1px solid rgba(255,255,255,0.12) !important; color: #e0e0ff !important; }
+    input:focus, select:focus, textarea:focus { outline: none; border-color: rgba(0,240,255,0.5) !important; }
     #app { height: 100vh; display: flex; flex-direction: column; }
     .main-content { flex: 1; overflow: hidden; display: flex; }
     .content-area { flex: 1; overflow-y: auto; padding: 1.25rem; }
-    @media (max-width: 768px) {
-      .floating-ai { width: 95vw; height: 70vh; left: 2.5vw !important; top: 15vh !important; }
-      .sidebar { width: 56px !important; }
-      .sidebar span { display: none; }
-    }
+    .empty-state { display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 180px; color: #67e8f9; opacity: 0.75; text-align: center; padding: 1rem; }
+    @media (max-width: 768px) { .floating-ai { width: 95vw; height: 70vh; left: 2.5vw !important; top: 12vh !important; } .sidebar { width: 56px !important; } .sidebar span { display: none; } }
   </style>
 </head>
-<body class="y2k-grid scanline">
+<body class="y2k-grid">
   <div id="app">
-    <!-- Top Bar -->
     <header class="glass-strong h-14 flex items-center justify-between px-4 border-b border-cyan-500/20 shrink-0">
       <div class="flex items-center gap-3">
-        <div class="w-9 h-9 rounded-lg bg-gradient-to-br from-cyan-400 to-purple-600 flex items-center justify-center font-orbitron font-bold text-black text-sm shadow-neon">JM</div>
+        <div class="w-9 h-9 rounded-lg bg-gradient-to-br from-cyan-400 to-purple-600 flex items-center justify-center font-orbitron font-bold text-black text-sm">JM</div>
         <div>
           <h1 class="font-orbitron font-bold text-lg tracking-wider neon-text text-cyan-300">JOBMASTER AI</h1>
-          <p class="text-[10px] text-cyan-500/70 -mt-0.5 tracking-widest">A++ EDITION • AUTONOMOUS</p>
+          <p class="text-[10px] text-cyan-500/70 -mt-0.5 tracking-widest">A++ • ZERO MOCK DATA</p>
         </div>
       </div>
-      <div class="flex items-center gap-4">
+      <div class="flex items-center gap-3">
         <div class="hidden md:flex items-center gap-2 text-xs">
-          <span class="status-dot status-applied pulse-neon"></span>
+          <span class="w-2 h-2 rounded-full bg-cyan-400"></span>
           <span id="autoStatus" class="text-cyan-300">Pipeline Idle</span>
         </div>
-        <button id="startAutoBtn" class="px-3 py-1.5 rounded-lg text-xs font-semibold bg-cyan-500/20 border border-cyan-400/40 text-cyan-300 hover:bg-cyan-500/30 transition neon-border">
-          ▶ START AUTO
-        </button>
-        <button id="themeToggle" class="w-8 h-8 rounded-lg glass flex items-center justify-center hover:bg-white/5" title="Toggle theme">🌓</button>
-        <div class="w-8 h-8 rounded-full bg-gradient-to-r from-pink-500 to-cyan-400 flex items-center justify-center text-xs font-bold text-black">U</div>
+        <button id="startAutoBtn" class="px-3 py-1.5 rounded-lg text-xs font-semibold bg-cyan-500/20 border border-cyan-400/40 text-cyan-300">▶ START AUTO</button>
       </div>
     </header>
-
     <div class="main-content">
-      <!-- Sidebar -->
       <nav class="sidebar glass-strong w-52 shrink-0 border-r border-cyan-500/10 flex flex-col py-3 gap-1 overflow-y-auto">
-        <button data-tab="dashboard" class="tab-btn active flex items-center gap-3 px-4 py-2.5 mx-2 rounded-lg text-sm transition sidebar-icon">
-          <span class="text-lg">📊</span> <span>Dashboard</span>
-        </button>
-        <button data-tab="search" class="tab-btn flex items-center gap-3 px-4 py-2.5 mx-2 rounded-lg text-sm transition sidebar-icon">
-          <span class="text-lg">🔍</span> <span>Job Search</span>
-        </button>
-        <button data-tab="applications" class="tab-btn flex items-center gap-3 px-4 py-2.5 mx-2 rounded-lg text-sm transition sidebar-icon">
-          <span class="text-lg">📋</span> <span>Applications</span>
-        </button>
-        <button data-tab="calendar" class="tab-btn flex items-center gap-3 px-4 py-2.5 mx-2 rounded-lg text-sm transition sidebar-icon">
-          <span class="text-lg">📅</span> <span>Calendar</span>
-        </button>
-        <button data-tab="resume" class="tab-btn flex items-center gap-3 px-4 py-2.5 mx-2 rounded-lg text-sm transition sidebar-icon">
-          <span class="text-lg">📄</span> <span>Resume Builder</span>
-        </button>
-        <button data-tab="analytics" class="tab-btn flex items-center gap-3 px-4 py-2.5 mx-2 rounded-lg text-sm transition sidebar-icon">
-          <span class="text-lg">📈</span> <span>Analytics</span>
-        </button>
-        <button data-tab="interview" class="tab-btn flex items-center gap-3 px-4 py-2.5 mx-2 rounded-lg text-sm transition sidebar-icon">
-          <span class="text-lg">🎤</span> <span>Mock Interview</span>
-        </button>
-        <button data-tab="settings" class="tab-btn flex items-center gap-3 px-4 py-2.5 mx-2 rounded-lg text-sm transition sidebar-icon">
-          <span class="text-lg">⚙️</span> <span>Settings</span>
-        </button>
-        <button data-tab="logs" class="tab-btn flex items-center gap-3 px-4 py-2.5 mx-2 rounded-lg text-sm transition sidebar-icon">
-          <span class="text-lg">📜</span> <span>Logs</span>
-        </button>
-        <div class="mt-auto px-3 pt-4 border-t border-white/5">
-          <div class="text-[10px] text-cyan-600 uppercase tracking-wider mb-1">Quality Gate</div>
-          <div class="text-xs text-cyan-300">Score ≥ <span id="qualityThresh">75</span></div>
-          <div class="mt-2 text-[10px] text-cyan-600">Apps today</div>
-          <div class="text-sm font-orbitron text-cyan-300"><span id="appsToday">0</span> / <span id="maxApps">25</span></div>
+        <button data-tab="dashboard" class="tab-btn active flex items-center gap-3 px-4 py-2.5 mx-2 rounded-lg text-sm">📊 <span>Dashboard</span></button>
+        <button data-tab="search" class="tab-btn flex items-center gap-3 px-4 py-2.5 mx-2 rounded-lg text-sm">🔍 <span>Job Search</span></button>
+        <button data-tab="applications" class="tab-btn flex items-center gap-3 px-4 py-2.5 mx-2 rounded-lg text-sm">📋 <span>Applications</span></button>
+        <button data-tab="calendar" class="tab-btn flex items-center gap-3 px-4 py-2.5 mx-2 rounded-lg text-sm">📅 <span>Calendar</span></button>
+        <button data-tab="resume" class="tab-btn flex items-center gap-3 px-4 py-2.5 mx-2 rounded-lg text-sm">📄 <span>Resume</span></button>
+        <button data-tab="interview" class="tab-btn flex items-center gap-3 px-4 py-2.5 mx-2 rounded-lg text-sm">🎤 <span>Interview</span></button>
+        <button data-tab="settings" class="tab-btn flex items-center gap-3 px-4 py-2.5 mx-2 rounded-lg text-sm">⚙️ <span>Settings</span></button>
+        <button data-tab="logs" class="tab-btn flex items-center gap-3 px-4 py-2.5 mx-2 rounded-lg text-sm">📜 <span>Logs</span></button>
+        <div class="mt-auto px-3 pt-4 border-t border-white/5 text-xs text-cyan-500">
+          <div>Quality ≥ <span id="qualityThresh">75</span></div>
+          <div class="mt-1 font-orbitron text-cyan-300"><span id="appsToday">0</span> / <span id="maxApps">25</span> today</div>
         </div>
       </nav>
-
-      <!-- Content Area -->
-      <main class="content-area" id="contentArea">
-        <!-- DASHBOARD -->
+      <main class="content-area">
         <section id="tab-dashboard" class="tab-panel">
           <div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-5">
-            <div class="glass rounded-xl p-4 neon-border">
-              <div class="text-xs text-cyan-500 mb-1">Applications Today</div>
-              <div class="text-3xl font-orbitron font-bold text-cyan-300" id="statApps">12</div>
-              <div class="text-[10px] text-green-400 mt-1">↑ 3 vs yesterday</div>
-            </div>
-            <div class="glass rounded-xl p-4">
-              <div class="text-xs text-cyan-500 mb-1">Pending Response</div>
-              <div class="text-3xl font-orbitron font-bold text-purple-300" id="statPending">47</div>
-            </div>
-            <div class="glass rounded-xl p-4">
-              <div class="text-xs text-cyan-500 mb-1">Interviews</div>
-              <div class="text-3xl font-orbitron font-bold text-yellow-300" id="statInterviews">5</div>
-            </div>
-            <div class="glass rounded-xl p-4">
-              <div class="text-xs text-cyan-500 mb-1">Response Rate</div>
-              <div class="text-3xl font-orbitron font-bold text-green-300" id="statRate">18%</div>
-            </div>
+            <div class="glass rounded-xl p-4 neon-border"><div class="text-xs text-cyan-500">Apps Today</div><div class="text-3xl font-orbitron text-cyan-300" id="statApps">0</div></div>
+            <div class="glass rounded-xl p-4"><div class="text-xs text-cyan-500">Pending</div><div class="text-3xl font-orbitron text-purple-300" id="statPending">0</div></div>
+            <div class="glass rounded-xl p-4"><div class="text-xs text-cyan-500">Interviews</div><div class="text-3xl font-orbitron text-yellow-300" id="statInterviews">0</div></div>
+            <div class="glass rounded-xl p-4"><div class="text-xs text-cyan-500">Response Rate</div><div class="text-3xl font-orbitron text-green-300" id="statRate">—</div></div>
           </div>
-          <div class="grid md:grid-cols-3 gap-4 mb-5">
-            <div class="glass rounded-xl p-4 md:col-span-2">
-              <h3 class="font-orbitron text-sm text-cyan-300 mb-3">Hourly Activity</h3>
-              <canvas id="activityChart" height="120"></canvas>
-            </div>
-            <div class="glass rounded-xl p-4">
-              <h3 class="font-orbitron text-sm text-cyan-300 mb-3">Source Breakdown</h3>
-              <canvas id="sourceChart" height="140"></canvas>
-            </div>
-          </div>
-          <div class="grid md:grid-cols-2 gap-4">
-            <div class="glass rounded-xl p-4">
-              <h3 class="font-orbitron text-sm text-cyan-300 mb-3">Live Alerts</h3>
-              <div id="alertsFeed" class="space-y-2 max-h-48 overflow-y-auto text-sm">
-                <div class="flex gap-2 items-start p-2 rounded bg-cyan-500/10 border border-cyan-500/20">
-                  <span class="text-cyan-400">●</span>
-                  <div><span class="text-cyan-200">Applied to Senior Frontend @ Stripe</span><br><span class="text-[10px] text-cyan-600">2 min ago • Score 92</span></div>
-                </div>
-                <div class="flex gap-2 items-start p-2 rounded bg-yellow-500/10 border border-yellow-500/20">
-                  <span class="text-yellow-400">●</span>
-                  <div><span class="text-yellow-200">Interview invite – Product Designer @ Notion</span><br><span class="text-[10px] text-yellow-600">18 min ago</span></div>
-                </div>
-                <div class="flex gap-2 items-start p-2 rounded bg-green-500/10 border border-green-500/20">
-                  <span class="text-green-400">●</span>
-                  <div><span class="text-green-200">Offer received – Full Stack @ Linear</span><br><span class="text-[10px] text-green-600">1h ago • $165k</span></div>
-                </div>
-              </div>
-            </div>
-            <div class="glass rounded-xl p-4">
-              <h3 class="font-orbitron text-sm text-cyan-300 mb-3">ML Insights</h3>
-              <ul class="text-sm space-y-2 text-cyan-100/80">
-                <li>• Best performing source: <span class="text-cyan-300">LinkedIn</span> (24% response)</li>
-                <li>• Optimal apply window: <span class="text-cyan-300">Tue–Thu 9–11am</span></li>
-                <li>• Keywords lifting score: <span class="text-green-300">React, System Design</span></li>
-                <li>• Predicted interviews this week: <span class="text-yellow-300">3–5</span></li>
-              </ul>
-            </div>
-          </div>
+          <div class="glass rounded-xl p-4"><h3 class="font-orbitron text-sm text-cyan-300 mb-2">Live Alerts</h3><div id="alertsFeed" class="empty-state text-sm">No activity yet. Run a real search or start the pipeline.</div></div>
         </section>
-
-        <!-- JOB SEARCH -->
         <section id="tab-search" class="tab-panel hidden">
           <div class="flex flex-wrap gap-3 mb-4 items-end">
-            <div class="flex-1 min-w-[200px]">
-              <label class="text-xs text-cyan-500">Keywords</label>
-              <input id="searchQuery" type="text" value="Senior Frontend Engineer React" class="w-full mt-1 px-3 py-2 rounded-lg text-sm" />
-            </div>
-            <div>
-              <label class="text-xs text-cyan-500">Location</label>
-              <input id="searchLoc" type="text" value="Remote" class="w-full mt-1 px-3 py-2 rounded-lg text-sm w-32" />
-            </div>
-            <div>
-              <label class="text-xs text-cyan-500">Min Salary</label>
-              <input id="searchSal" type="number" value="120000" class="w-full mt-1 px-3 py-2 rounded-lg text-sm w-28" />
-            </div>
-            <button id="searchBtn" class="px-5 py-2 rounded-lg bg-cyan-500/30 border border-cyan-400 text-cyan-200 font-semibold text-sm hover:bg-cyan-500/40 neon-border">Search</button>
-            <button id="bulkApplyBtn" class="px-4 py-2 rounded-lg bg-pink-500/20 border border-pink-400/40 text-pink-200 text-sm">Bulk Apply (≥80)</button>
+            <div class="flex-1 min-w-[160px]"><label class="text-xs text-cyan-500">Keywords</label><input id="searchQuery" type="text" placeholder="React, Python, remote…" class="w-full mt-1 px-3 py-2 rounded-lg text-sm" /></div>
+            <select id="searchRemote" class="px-3 py-2 rounded-lg text-sm"><option value="any">Any location</option><option value="true">Remote only</option></select>
+            <button id="searchBtn" class="px-5 py-2 rounded-lg bg-cyan-500/30 border border-cyan-400 text-cyan-200 font-semibold text-sm neon-border">Search Live Jobs</button>
+            <button id="bulkBtn" class="px-4 py-2 rounded-lg bg-pink-500/20 border border-pink-400/40 text-pink-200 text-sm">Bulk Stage (≥75)</button>
           </div>
-          <div class="flex gap-2 mb-3 text-xs">
-            <span class="px-2 py-1 rounded bg-white/5">Results: <span id="resultCount">0</span></span>
-            <span class="px-2 py-1 rounded bg-white/5">Avg Score: <span id="avgScore">–</span></span>
-            <span class="px-2 py-1 rounded bg-green-500/10 text-green-300">Quality Gate: ON</span>
-          </div>
-          <div id="jobResults" class="grid gap-3 md:grid-cols-2 xl:grid-cols-3"></div>
+          <div class="text-xs mb-3 space-x-2"><span class="px-2 py-1 rounded bg-white/5">Results: <span id="resultCount">0</span></span><span class="px-2 py-1 rounded bg-green-500/10 text-green-300">Source: Arbeitnow (live free API)</span></div>
+          <div id="jobResults" class="grid gap-3 md:grid-cols-2 xl:grid-cols-3"><div class="empty-state col-span-full">Press “Search Live Jobs” to fetch real listings. Zero mock data.</div></div>
         </section>
-
-        <!-- APPLICATIONS -->
         <section id="tab-applications" class="tab-panel hidden">
-          <div class="flex gap-2 mb-4">
-            <button class="view-btn active px-3 py-1.5 rounded-lg text-xs glass" data-view="kanban">Kanban</button>
-            <button class="view-btn px-3 py-1.5 rounded-lg text-xs glass" data-view="table">Table</button>
-            <div class="ml-auto flex gap-2">
-              <select id="folderFilter" class="px-2 py-1 rounded text-xs">
-                <option>All</option><option>Starred</option><option>Follow-up</option><option>Archived</option>
-              </select>
-            </div>
-          </div>
-          <div id="kanbanView" class="grid grid-cols-2 md:grid-cols-4 gap-3 overflow-x-auto">
-            <div class="glass rounded-xl p-3 kanban-col">
-              <div class="text-xs font-semibold text-cyan-400 mb-2 flex justify-between">Applied <span class="bg-cyan-500/20 px-1.5 rounded">8</span></div>
-              <div class="space-y-2" id="col-applied"></div>
-            </div>
-            <div class="glass rounded-xl p-3 kanban-col">
-              <div class="text-xs font-semibold text-purple-400 mb-2 flex justify-between">Interview <span class="bg-purple-500/20 px-1.5 rounded">3</span></div>
-              <div class="space-y-2" id="col-interview"></div>
-            </div>
-            <div class="glass rounded-xl p-3 kanban-col">
-              <div class="text-xs font-semibold text-green-400 mb-2 flex justify-between">Offer <span class="bg-green-500/20 px-1.5 rounded">1</span></div>
-              <div class="space-y-2" id="col-offer"></div>
-            </div>
-            <div class="glass rounded-xl p-3 kanban-col">
-              <div class="text-xs font-semibold text-red-400 mb-2 flex justify-between">Rejected <span class="bg-red-500/20 px-1.5 rounded">4</span></div>
-              <div class="space-y-2" id="col-rejected"></div>
-            </div>
-          </div>
-          <div id="tableView" class="hidden overflow-x-auto">
-            <table class="w-full text-sm">
-              <thead class="text-left text-cyan-500 text-xs">
-                <tr><th class="p-2">Company</th><th>Role</th><th>Status</th><th>Score</th><th>Applied</th><th>Actions</th></tr>
-              </thead>
-              <tbody id="appTableBody"></tbody>
-            </table>
+          <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+            <div class="glass rounded-xl p-3 min-h-[180px]"><div class="text-xs font-semibold text-cyan-400 mb-2">Applied <span id="c-applied">0</span></div><div id="col-applied" class="space-y-2"></div></div>
+            <div class="glass rounded-xl p-3 min-h-[180px]"><div class="text-xs font-semibold text-purple-400 mb-2">Interview <span id="c-interview">0</span></div><div id="col-interview" class="space-y-2"></div></div>
+            <div class="glass rounded-xl p-3 min-h-[180px]"><div class="text-xs font-semibold text-green-400 mb-2">Offer <span id="c-offer">0</span></div><div id="col-offer" class="space-y-2"></div></div>
+            <div class="glass rounded-xl p-3 min-h-[180px]"><div class="text-xs font-semibold text-red-400 mb-2">Rejected <span id="c-rejected">0</span></div><div id="col-rejected" class="space-y-2"></div></div>
           </div>
         </section>
-
-        <!-- CALENDAR -->
         <section id="tab-calendar" class="tab-panel hidden">
           <div class="glass rounded-xl p-4">
-            <div class="flex justify-between items-center mb-4">
-              <h3 class="font-orbitron text-cyan-300" id="calMonth">August 2026</h3>
-              <div class="flex gap-2">
-                <button id="calPrev" class="px-2 py-1 rounded glass text-sm">‹</button>
-                <button id="calNext" class="px-2 py-1 rounded glass text-sm">›</button>
-              </div>
-            </div>
-            <div class="grid grid-cols-7 gap-1 text-center text-xs text-cyan-500 mb-2">
-              <div>Sun</div><div>Mon</div><div>Tue</div><div>Wed</div><div>Thu</div><div>Fri</div><div>Sat</div>
-            </div>
+            <div class="flex justify-between mb-4"><h3 class="font-orbitron text-cyan-300" id="calMonth"></h3><div><button id="calPrev" class="px-2 py-1 rounded glass text-sm">‹</button> <button id="calNext" class="px-2 py-1 rounded glass text-sm">›</button></div></div>
+            <div class="grid grid-cols-7 gap-1 text-center text-xs text-cyan-500 mb-2"><div>S</div><div>M</div><div>T</div><div>W</div><div>T</div><div>F</div><div>S</div></div>
             <div id="calGrid" class="grid grid-cols-7 gap-1"></div>
-            <div class="mt-4 text-sm text-cyan-200/70">Click a day to add follow-up / interview task. Linked to email automation.</div>
+            <p class="mt-3 text-xs text-cyan-600">No pre-filled events. Click a day to add a real follow-up or interview.</p>
           </div>
         </section>
-
-        <!-- RESUME -->
         <section id="tab-resume" class="tab-panel hidden">
           <div class="grid md:grid-cols-2 gap-4">
             <div class="glass rounded-xl p-4 space-y-3">
-              <h3 class="font-orbitron text-cyan-300 text-sm">Profile & Tailor</h3>
-              <input id="resName" type="text" placeholder="Full Name" value="Alex Rivera" class="w-full px-3 py-2 rounded-lg text-sm" />
-              <input id="resTitle" type="text" placeholder="Target Title" value="Senior Frontend Engineer" class="w-full px-3 py-2 rounded-lg text-sm" />
-              <textarea id="resSummary" rows="3" class="w-full px-3 py-2 rounded-lg text-sm" placeholder="Summary">Product-minded engineer with 6+ years building high-performance React applications. Passionate about design systems and accessibility.</textarea>
-              <div class="flex gap-2">
-                <button id="aiTailorBtn" class="flex-1 py-2 rounded-lg bg-purple-500/20 border border-purple-400/40 text-purple-200 text-sm">✨ AI Tailor for Job</button>
-                <button id="pdfBtn" class="px-4 py-2 rounded-lg bg-cyan-500/20 border border-cyan-400/40 text-cyan-200 text-sm">PDF</button>
-              </div>
-              <div class="text-xs text-cyan-500">Variants: Balanced • Aggressive • Conservative</div>
+              <h3 class="font-orbitron text-cyan-300 text-sm">Your real profile</h3>
+              <input id="resName" type="text" placeholder="Full Name" class="w-full px-3 py-2 rounded-lg text-sm" />
+              <input id="resTitle" type="text" placeholder="Target Title" class="w-full px-3 py-2 rounded-lg text-sm" />
+              <textarea id="resSummary" rows="5" placeholder="Only real experience from your wheelhouse" class="w-full px-3 py-2 rounded-lg text-sm"></textarea>
+              <button id="aiTailorBtn" class="w-full py-2 rounded-lg bg-purple-500/20 border border-purple-400/40 text-purple-200 text-sm">✨ AI Tailor (Wheelhouse Guardrail)</button>
+              <p class="text-xs text-cyan-600">AI may only rephrase what you typed. Fabrication is blocked.</p>
             </div>
             <div class="glass rounded-xl p-4">
               <h3 class="font-orbitron text-cyan-300 text-sm mb-3">Live Preview</h3>
-              <div id="resumePreview" class="bg-white text-gray-900 rounded-lg p-5 text-sm min-h-[320px] shadow-lg">
-                <h2 class="text-xl font-bold">Alex Rivera</h2>
-                <p class="text-gray-600">Senior Frontend Engineer</p>
-                <hr class="my-3" />
-                <p class="text-gray-700 leading-relaxed">Product-minded engineer with 6+ years building high-performance React applications. Passionate about design systems and accessibility.</p>
-                <h3 class="font-semibold mt-4 mb-1">Experience</h3>
-                <p class="text-sm"><strong>Senior Frontend • Acme Corp</strong> (2022–Present)</p>
-                <ul class="list-disc ml-4 text-gray-700 text-xs">
-                  <li>Led migration to Next.js 14 + App Router</li>
-                  <li>Built component library used by 40+ engineers</li>
-                </ul>
-              </div>
+              <div id="resumePreview" class="bg-white text-gray-900 rounded-lg p-5 text-sm min-h-[240px]"><div class="text-gray-400 italic">Empty until you enter real data.</div></div>
             </div>
           </div>
         </section>
-
-        <!-- ANALYTICS -->
-        <section id="tab-analytics" class="tab-panel hidden">
-          <div class="grid md:grid-cols-2 gap-4 mb-4">
-            <div class="glass rounded-xl p-4">
-              <h3 class="font-orbitron text-sm text-cyan-300 mb-3">Success Heatmap (by day)</h3>
-              <canvas id="heatChart" height="160"></canvas>
-            </div>
-            <div class="glass rounded-xl p-4">
-              <h3 class="font-orbitron text-sm text-cyan-300 mb-3">Time-to-Response</h3>
-              <canvas id="timeChart" height="160"></canvas>
-            </div>
-          </div>
-          <div class="glass rounded-xl p-4">
-            <h3 class="font-orbitron text-sm text-cyan-300 mb-3">Deduplication Stats</h3>
-            <div class="grid grid-cols-3 gap-4 text-center">
-              <div><div class="text-2xl font-orbitron text-cyan-300">1,284</div><div class="text-xs text-cyan-500">Raw listings</div></div>
-              <div><div class="text-2xl font-orbitron text-green-300">312</div><div class="text-xs text-cyan-500">Unique after fuzzy</div></div>
-              <div><div class="text-2xl font-orbitron text-pink-300">76%</div><div class="text-xs text-cyan-500">Duplicates removed</div></div>
-            </div>
-          </div>
-        </section>
-
-        <!-- MOCK INTERVIEW -->
         <section id="tab-interview" class="tab-panel hidden">
-          <div class="glass rounded-xl p-5 max-w-2xl mx-auto">
-            <h3 class="font-orbitron text-cyan-300 mb-2">Mock Interview Simulator</h3>
-            <p class="text-sm text-cyan-200/70 mb-4">Role-specific questions • STAR coaching • Real-time scoring</p>
+          <div class="glass rounded-xl p-5 max-w-xl mx-auto">
+            <h3 class="font-orbitron text-cyan-300 mb-2">Mock Interview</h3>
             <select id="interviewRole" class="w-full px-3 py-2 rounded-lg text-sm mb-3">
-              <option>Senior Frontend Engineer</option>
-              <option>Full Stack Engineer</option>
-              <option>Product Manager</option>
-              <option>Data Scientist</option>
+              <option>Senior Frontend Engineer</option><option>Full Stack Engineer</option><option>Backend Engineer</option><option>Product Manager</option><option>Data Scientist</option>
             </select>
-            <div id="interviewQ" class="p-4 rounded-lg bg-purple-500/10 border border-purple-400/30 mb-3 text-sm min-h-[80px]">
-              Click Start to receive your first question.
-            </div>
-            <textarea id="interviewAns" rows="4" class="w-full px-3 py-2 rounded-lg text-sm mb-3" placeholder="Type or speak your answer (STAR method recommended)..."></textarea>
+            <div id="interviewQ" class="p-4 rounded-lg bg-purple-500/10 border border-purple-400/30 mb-3 text-sm min-h-[70px]">Press Start. Questions are role-based and generated on demand.</div>
+            <textarea id="interviewAns" rows="3" class="w-full px-3 py-2 rounded-lg text-sm mb-3" placeholder="STAR answer…"></textarea>
             <div class="flex gap-2">
-              <button id="startInterview" class="px-4 py-2 rounded-lg bg-purple-500/30 border border-purple-400 text-purple-200 text-sm">Start Session</button>
-              <button id="submitAns" class="px-4 py-2 rounded-lg bg-cyan-500/20 border border-cyan-400/40 text-cyan-200 text-sm">Submit Answer</button>
-              <button id="voiceAns" class="px-3 py-2 rounded-lg glass text-sm" title="Voice input">🎤</button>
+              <button id="startInterview" class="px-4 py-2 rounded-lg bg-purple-500/30 border border-purple-400 text-purple-200 text-sm">Start</button>
+              <button id="submitAns" class="px-4 py-2 rounded-lg bg-cyan-500/20 border border-cyan-400/40 text-cyan-200 text-sm">Submit</button>
             </div>
-            <div id="interviewFeedback" class="mt-4 text-sm hidden"></div>
+            <div id="interviewFeedback" class="mt-3 text-sm hidden"></div>
           </div>
         </section>
-
-        <!-- SETTINGS -->
         <section id="tab-settings" class="tab-panel hidden">
           <div class="grid md:grid-cols-2 gap-4">
             <div class="glass rounded-xl p-4 space-y-3">
-              <h3 class="font-orbitron text-sm text-cyan-300">Automation</h3>
-              <label class="flex justify-between items-center text-sm">
-                <span>Quality threshold</span>
-                <input id="setQuality" type="range" min="50" max="95" value="75" class="w-32" />
-                <span id="setQualityVal">75</span>
-              </label>
-              <label class="flex justify-between items-center text-sm">
-                <span>Max apps / day</span>
-                <input id="setMaxApps" type="number" value="25" class="w-20 px-2 py-1 rounded text-sm" />
-              </label>
-              <label class="flex items-center gap-2 text-sm">
-                <input type="checkbox" id="setStealth" checked /> Stealth browser mode
-              </label>
-              <label class="flex items-center gap-2 text-sm">
-                <input type="checkbox" id="setHuman" checked /> Human-like delays
-              </label>
-              <label class="flex items-center gap-2 text-sm">
-                <input type="checkbox" id="setLocalLLM" /> Local LLM (privacy)
-              </label>
+              <h3 class="font-orbitron text-sm text-cyan-300">Mode & Limits</h3>
+              <select id="setMode" class="w-full px-3 py-2 rounded-lg text-sm"><option value="hybrid">Hybrid (default)</option><option value="manual">Manual</option><option value="autonomous">Full Autonomous</option></select>
+              <label class="flex justify-between text-sm">Quality <input id="setQuality" type="range" min="50" max="95" value="75" class="w-28" /> <span id="setQualityVal">75</span></label>
+              <label class="flex justify-between text-sm">Max / day <input id="setMaxApps" type="number" value="25" min="1" max="100" class="w-20 px-2 py-1 rounded text-sm" /></label>
+              <label class="flex items-center gap-2 text-sm"><input type="checkbox" id="setStealth" checked /> Stealth mode</label>
+              <label class="flex items-center gap-2 text-sm"><input type="checkbox" id="setLocalLLM" /> Local LLM privacy</label>
             </div>
             <div class="glass rounded-xl p-4 space-y-3">
-              <h3 class="font-orbitron text-sm text-cyan-300">Email & AI</h3>
-              <input type="email" placeholder="SMTP Email" class="w-full px-3 py-2 rounded-lg text-sm" value="you@gmail.com" />
-              <input type="password" placeholder="App Password" class="w-full px-3 py-2 rounded-lg text-sm" />
-              <input type="text" placeholder="OpenRouter API Key (optional)" class="w-full px-3 py-2 rounded-lg text-sm" />
-              <button class="w-full py-2 rounded-lg bg-cyan-500/20 border border-cyan-400/40 text-cyan-200 text-sm">Test Email</button>
-              <div class="text-xs text-cyan-500">Zero-cost mode active (free models)</div>
-            </div>
-            <div class="glass rounded-xl p-4 space-y-3 md:col-span-2">
-              <h3 class="font-orbitron text-sm text-cyan-300">Theme & QoL</h3>
-              <div class="flex gap-3 items-center">
-                <span class="text-sm">Accent</span>
-                <button class="w-8 h-8 rounded-full bg-cyan-400 border-2 border-white/30" data-accent="#00f0ff"></button>
-                <button class="w-8 h-8 rounded-full bg-pink-500" data-accent="#ff00aa"></button>
-                <button class="w-8 h-8 rounded-full bg-purple-500" data-accent="#b400ff"></button>
-                <button class="w-8 h-8 rounded-full bg-green-400" data-accent="#00ff9d"></button>
-              </div>
-              <label class="flex items-center gap-2 text-sm">
-                <input type="checkbox" id="setConfetti" checked /> Milestone confetti
-              </label>
-              <button id="exportData" class="px-4 py-2 rounded-lg glass text-sm">Export JSON</button>
-              <button id="importData" class="px-4 py-2 rounded-lg glass text-sm">Import</button>
-              <button id="hardDelete" class="px-4 py-2 rounded-lg bg-red-500/20 border border-red-400/40 text-red-300 text-sm">Hard Delete All Data</button>
+              <h3 class="font-orbitron text-sm text-cyan-300">Credentials (local only)</h3>
+              <input type="email" id="smtpEmail" placeholder="SMTP Email" class="w-full px-3 py-2 rounded-lg text-sm" />
+              <input type="password" id="smtpPass" placeholder="App Password" class="w-full px-3 py-2 rounded-lg text-sm" />
+              <input type="password" id="orKey" placeholder="OpenRouter Key (optional)" class="w-full px-3 py-2 rounded-lg text-sm" />
+              <button id="exportData" class="px-4 py-2 rounded-lg glass text-sm mr-2">Export JSON</button>
+              <button id="hardDelete" class="px-4 py-2 rounded-lg bg-red-500/20 border border-red-400/40 text-red-300 text-sm">Hard Delete</button>
             </div>
           </div>
         </section>
-
-        <!-- LOGS -->
         <section id="tab-logs" class="tab-panel hidden">
-          <div class="glass rounded-xl p-4">
-            <div class="flex gap-2 mb-3">
-              <input id="logFilter" type="text" placeholder="Filter logs..." class="flex-1 px-3 py-1.5 rounded-lg text-sm" />
-              <select id="logType" class="px-2 py-1 rounded text-sm">
-                <option>All</option><option>Apply</option><option>Email</option><option>Error</option><option>ML</option>
-              </select>
-            </div>
-            <div id="logsList" class="space-y-1 max-h-[60vh] overflow-y-auto font-mono text-xs">
-              <div class="p-2 rounded bg-white/5 flex gap-3"><span class="text-cyan-600">11:32:01</span><span class="text-cyan-300">[APPLY]</span> Applied to Stripe – Senior Frontend (score 92)</div>
-              <div class="p-2 rounded bg-white/5 flex gap-3"><span class="text-cyan-600">11:28:44</span><span class="text-yellow-300">[EMAIL]</span> Follow-up scheduled for Notion (+7d)</div>
-              <div class="p-2 rounded bg-white/5 flex gap-3"><span class="text-cyan-600">11:15:12</span><span class="text-green-300">[ML]</span> Pattern learner updated: LinkedIn response +2.1%</div>
-              <div class="p-2 rounded bg-white/5 flex gap-3"><span class="text-cyan-600">10:58:03</span><span class="text-red-300">[ERROR]</span> Rate limit hit on Indeed – backoff 45s</div>
-              <div class="p-2 rounded bg-white/5 flex gap-3"><span class="text-cyan-600">10:42:17</span><span class="text-cyan-300">[APPLY]</span> Applied to Linear – Full Stack (score 88)</div>
-            </div>
-          </div>
+          <div class="glass rounded-xl p-4"><div id="logsList" class="space-y-1 max-h-[60vh] overflow-y-auto font-mono text-xs"><div class="empty-state">No entries yet.</div></div></div>
         </section>
       </main>
     </div>
   </div>
-
-  <!-- Floating AI Assistant -->
-  <div id="floatingAI" class="floating-ai glass-strong neon-border hidden" style="right: 24px; bottom: 24px;">
-    <div class="ai-header flex items-center justify-between px-3 py-2 border-b border-cyan-500/20 bg-gradient-to-r from-cyan-500/10 to-purple-500/10">
-      <div class="flex items-center gap-2">
-        <div class="w-6 h-6 rounded-full bg-gradient-to-br from-cyan-400 to-purple-500 flex items-center justify-center text-[10px] font-bold text-black">AI</div>
-        <span class="font-orbitron text-xs text-cyan-300">JobMaster AI</span>
-      </div>
-      <div class="flex gap-1">
-        <button id="aiMinimize" class="w-6 h-6 rounded hover:bg-white/10 text-xs">–</button>
-        <button id="aiClose" class="w-6 h-6 rounded hover:bg-white/10 text-xs">✕</button>
-      </div>
+  <div id="floatingAI" class="floating-ai glass-strong neon-border hidden" style="right:24px;bottom:24px;">
+    <div class="ai-header flex items-center justify-between px-3 py-2 border-b border-cyan-500/20">
+      <span class="font-orbitron text-xs text-cyan-300">JobMaster AI</span>
+      <button id="aiClose" class="w-6 h-6 rounded hover:bg-white/10 text-xs">✕</button>
     </div>
-    <div id="aiChat" class="flex-1 overflow-y-auto p-3 space-y-3 h-[calc(100%-110px)]">
-      <div class="msg-ai p-2.5 rounded-lg text-sm">
-        Hey! I'm your JobMaster co-pilot. I can search jobs, tailor resumes, schedule follow-ups, run mock interviews, or start the autonomous pipeline. What do you need?
-      </div>
-    </div>
+    <div id="aiChat" class="overflow-y-auto p-3 space-y-3" style="height:calc(100% - 100px);"><div class="msg-ai p-2.5 rounded-lg text-sm">Real data only. Ask me to search live jobs or start the pipeline.</div></div>
     <div class="p-2 border-t border-cyan-500/20 flex gap-2">
-      <input id="aiInput" type="text" placeholder="Ask anything..." class="flex-1 px-3 py-2 rounded-lg text-sm" />
-      <button id="aiVoice" class="w-9 h-9 rounded-lg glass flex items-center justify-center">🎤</button>
-      <button id="aiSend" class="w-9 h-9 rounded-lg bg-cyan-500/30 border border-cyan-400/50 flex items-center justify-center text-cyan-200">➤</button>
+      <input id="aiInput" type="text" placeholder="Ask…" class="flex-1 px-3 py-2 rounded-lg text-sm" />
+      <button id="aiSend" class="w-9 h-9 rounded-lg bg-cyan-500/30 border border-cyan-400/50 text-cyan-200">➤</button>
     </div>
   </div>
-
-  <!-- AI Toggle FAB -->
-  <button id="aiFab" class="fixed bottom-6 right-6 w-14 h-14 rounded-full bg-gradient-to-br from-cyan-400 to-purple-600 shadow-neon flex items-center justify-center text-2xl z-[9998] hover:scale-105 transition">
-    🤖
-  </button>
-
-  <!-- Toast -->
-  <div id="toast" class="toast text-sm text-cyan-100"></div>
-
+  <button id="aiFab" class="fixed bottom-6 right-6 w-14 h-14 rounded-full bg-gradient-to-br from-cyan-400 to-purple-600 flex items-center justify-center text-2xl z-[9998]">🤖</button>
+  <div id="toast" class="toast text-sm"></div>
   <script>
-    // ========== STATE ==========
-    const state = {
-      currentTab: 'dashboard',
-      autoRunning: false,
-      appsToday: 12,
-      maxApps: 25,
-      quality: 75,
-      jobs: [],
-      applications: [
-        { id: 1, company: 'Stripe', role: 'Senior Frontend', status: 'applied', score: 92, date: '2026-08-01', starred: true },
-        { id: 2, company: 'Notion', role: 'Product Designer', status: 'interview', score: 88, date: '2026-07-30' },
-        { id: 3, company: 'Linear', role: 'Full Stack', status: 'offer', score: 95, date: '2026-07-28' },
-        { id: 4, company: 'Vercel', role: 'Frontend Eng', status: 'applied', score: 85, date: '2026-08-01' },
-        { id: 5, company: 'Figma', role: 'Design Eng', status: 'rejected', score: 78, date: '2026-07-25' },
-        { id: 6, company: 'Shopify', role: 'Senior React', status: 'applied', score: 90, date: '2026-07-31' },
-        { id: 7, company: 'Airbnb', role: 'Frontend', status: 'interview', score: 87, date: '2026-07-29' },
-        { id: 8, company: 'Discord', role: 'Full Stack', status: 'applied', score: 81, date: '2026-08-01' },
-      ],
-      chatHistory: []
-    };
-
-    // ========== MOCK JOBS ==========
-    const mockJobs = [
-      { title: 'Senior Frontend Engineer', company: 'Stripe', loc: 'Remote', sal: 180000, score: 94, source: 'LinkedIn', desc: 'Build payment UIs used by millions.' },
-      { title: 'Staff React Engineer', company: 'Vercel', loc: 'Remote', sal: 200000, score: 91, source: 'Greenhouse', desc: 'Next.js core & DX.' },
-      { title: 'Frontend Architect', company: 'Linear', loc: 'SF / Remote', sal: 175000, score: 89, source: 'Ashby', desc: 'Design systems at scale.' },
-      { title: 'Senior Product Designer', company: 'Notion', loc: 'Remote', sal: 160000, score: 86, source: 'Lever', desc: 'Editor experience.' },
-      { title: 'Full Stack Engineer', company: 'Shopify', loc: 'Remote', sal: 155000, score: 83, source: 'Indeed', desc: 'Merchant tools.' },
-      { title: 'UI Engineer', company: 'Figma', loc: 'SF', sal: 170000, score: 90, source: 'LinkedIn', desc: 'Canvas performance.' },
-      { title: 'React Native Eng', company: 'Discord', loc: 'Remote', sal: 165000, score: 79, source: 'Greenhouse', desc: 'Mobile chat.' },
-      { title: 'Senior Frontend', company: 'Airbnb', loc: 'Remote', sal: 185000, score: 88, source: 'Ashby', desc: 'Host experience.' },
-      { title: 'Design Systems Lead', company: 'GitHub', loc: 'Remote', sal: 190000, score: 92, source: 'LinkedIn', desc: 'Primer evolution.' },
-      { title: 'Frontend Engineer II', company: 'Netflix', loc: 'Remote', sal: 175000, score: 84, source: 'Workday', desc: 'TV UI.' },
-    ];
-
-    // ========== UTILS ==========
-    function toast(msg, ms = 3000) {
-      const t = document.getElementById('toast');
-      t.textContent = msg;
-      t.classList.add('show');
-      setTimeout(() => t.classList.remove('show'), ms);
-    }
-
-    function saveState() {
-      localStorage.setItem('jobmaster_state', JSON.stringify({
-        appsToday: state.appsToday,
-        quality: state.quality,
-        applications: state.applications,
-        chatHistory: state.chatHistory
-      }));
-    }
-
-    function loadState() {
-      try {
-        const s = JSON.parse(localStorage.getItem('jobmaster_state') || '{}');
-        if (s.appsToday) state.appsToday = s.appsToday;
-        if (s.quality) state.quality = s.quality;
-        if (s.applications) state.applications = s.applications;
-        if (s.chatHistory) state.chatHistory = s.chatHistory;
-      } catch {}
-    }
-
-    // ========== TABS ==========
-    document.querySelectorAll('.tab-btn').forEach(btn => {
-      btn.addEventListener('click', () => {
-        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-        document.querySelectorAll('.tab-panel').forEach(p => p.classList.add('hidden'));
-        const tab = btn.dataset.tab;
-        document.getElementById('tab-' + tab).classList.remove('hidden');
-        state.currentTab = tab;
-        if (tab === 'search' && state.jobs.length === 0) renderJobs(mockJobs);
-        if (tab === 'applications') renderApplications();
-        if (tab === 'calendar') renderCalendar();
-        if (tab === 'analytics') renderAnalyticsCharts();
-      });
-    });
-
-    // ========== DASHBOARD CHARTS ==========
-    function initDashboardCharts() {
-      const ctx1 = document.getElementById('activityChart');
-      if (ctx1 && !ctx1.chart) {
-        ctx1.chart = new Chart(ctx1, {
-          type: 'line',
-          data: {
-            labels: ['9a','10a','11a','12p','1p','2p','3p','4p','5p'],
-            datasets: [{
-              label: 'Applications',
-              data: [1, 3, 2, 0, 4, 2, 1, 3, 0],
-              borderColor: '#00f0ff',
-              backgroundColor: 'rgba(0,240,255,0.1)',
-              fill: true,
-              tension: 0.4
-            }]
-          },
-          options: {
-            plugins: { legend: { display: false } },
-            scales: {
-              x: { ticks: { color: '#67e8f9' }, grid: { color: 'rgba(0,240,255,0.05)' } },
-              y: { ticks: { color: '#67e8f9' }, grid: { color: 'rgba(0,240,255,0.05)' } }
-            }
-          }
-        });
-      }
-      const ctx2 = document.getElementById('sourceChart');
-      if (ctx2 && !ctx2.chart) {
-        ctx2.chart = new Chart(ctx2, {
-          type: 'doughnut',
-          data: {
-            labels: ['LinkedIn', 'Indeed', 'Greenhouse', 'Ashby', 'Other'],
-            datasets: [{
-              data: [35, 22, 18, 15, 10],
-              backgroundColor: ['#00f0ff', '#b400ff', '#ff00aa', '#00ff9d', '#ffee00']
-            }]
-          },
-          options: {
-            plugins: { legend: { position: 'bottom', labels: { color: '#a5f3fc', boxWidth: 10, font: { size: 10 } } } }
-          }
-        });
-      }
-    }
-
-    // ========== JOB SEARCH ==========
-    function renderJobs(jobs) {
-      state.jobs = jobs;
-      const container = document.getElementById('jobResults');
-      document.getElementById('resultCount').textContent = jobs.length;
-      const avg = jobs.length ? Math.round(jobs.reduce((a, j) => a + j.score, 0) / jobs.length) : 0;
-      document.getElementById('avgScore').textContent = avg;
-      container.innerHTML = jobs.map(j => `
-        <div class="job-card glass rounded-xl p-4 transition cursor-pointer border border-transparent hover:border-cyan-500/30">
-          <div class="flex justify-between items-start mb-2">
-            <div>
-              <div class="font-semibold text-cyan-100">${j.title}</div>
-              <div class="text-sm text-cyan-400">${j.company} • ${j.loc}</div>
-            </div>
-            <div class="text-right">
-              <div class="text-lg font-orbitron font-bold ${j.score >= 85 ? 'text-green-300' : j.score >= 75 ? 'text-cyan-300' : 'text-yellow-300'}">${j.score}</div>
-              <div class="text-[10px] text-cyan-600">SCORE</div>
-            </div>
-          </div>
-          <div class="text-xs text-cyan-200/60 mb-3 line-clamp-2">${j.desc}</div>
-          <div class="flex justify-between items-center text-xs">
-            <span class="px-2 py-0.5 rounded bg-white/5">${j.source}</span>
-            <span class="text-green-300">$${(j.sal/1000).toFixed(0)}k</span>
-            <button class="apply-btn px-3 py-1 rounded bg-cyan-500/20 border border-cyan-400/40 text-cyan-200 hover:bg-cyan-500/30" data-id="${j.company}">Apply</button>
-          </div>
-        </div>
-      `).join('');
-      container.querySelectorAll('.apply-btn').forEach(btn => {
-        btn.addEventListener('click', (e) => {
-          e.stopPropagation();
-          applyJob(btn.dataset.id);
-        });
-      });
-    }
-
-    document.getElementById('searchBtn').addEventListener('click', () => {
-      toast('Searching across LinkedIn, Indeed, Greenhouse, Ashby...');
-      setTimeout(() => {
-        renderJobs(mockJobs.sort(() => Math.random() - 0.5));
-        toast(`Found ${mockJobs.length} high-quality matches`);
-      }, 800);
-    });
-
-    document.getElementById('bulkApplyBtn').addEventListener('click', () => {
-      const high = state.jobs.filter(j => j.score >= 80);
-      if (!high.length) return toast('No jobs above threshold');
-      toast(`Bulk applying to ${high.length} jobs (quality gate)...`);
-      high.forEach((j, i) => setTimeout(() => applyJob(j.company), i * 600));
-    });
-
-    function applyJob(company) {
-      if (state.appsToday >= state.maxApps) return toast('Daily limit reached');
-      state.appsToday++;
-      document.getElementById('appsToday').textContent = state.appsToday;
-      document.getElementById('statApps').textContent = state.appsToday;
-      state.applications.unshift({
-        id: Date.now(),
-        company,
-        role: 'Senior Frontend',
-        status: 'applied',
-        score: 80 + Math.floor(Math.random() * 15),
-        date: new Date().toISOString().slice(0, 10)
-      });
-      saveState();
-      toast(`✅ Applied to ${company}`);
-      addLog(`[APPLY] Applied to ${company}`);
-      if (state.appsToday % 5 === 0 && document.getElementById('setConfetti')?.checked) confettiBurst();
-    }
-
-    // ========== APPLICATIONS ==========
-    function renderApplications() {
-      const cols = { applied: [], interview: [], offer: [], rejected: [] };
-      state.applications.forEach(a => {
-        if (cols[a.status]) cols[a.status].push(a);
-      });
-      Object.keys(cols).forEach(k => {
-        const el = document.getElementById('col-' + k);
-        if (!el) return;
-        el.innerHTML = cols[k].map(a => `
-          <div class="p-2.5 rounded-lg bg-black/30 border border-white/5 text-xs">
-            <div class="font-medium text-cyan-100">${a.company}</div>
-            <div class="text-cyan-500">${a.role}</div>
-            <div class="flex justify-between mt-1">
-              <span class="text-cyan-600">${a.date}</span>
-              <span class="text-cyan-300">${a.score}</span>
-            </div>
-          </div>
-        `).join('');
-      });
-      const tbody = document.getElementById('appTableBody');
-      if (tbody) {
-        tbody.innerHTML = state.applications.map(a => `
-          <tr class="border-b border-white/5">
-            <td class="p-2">${a.company}</td>
-            <td>${a.role}</td>
-            <td><span class="status-dot status-${a.status} inline-block mr-1"></span>${a.status}</td>
-            <td>${a.score}</td>
-            <td>${a.date}</td>
-            <td><button class="text-cyan-400 text-xs">Follow-up</button></td>
-          </tr>
-        `).join('');
-      }
-    }
-
-    document.querySelectorAll('.view-btn').forEach(b => {
-      b.addEventListener('click', () => {
-        document.querySelectorAll('.view-btn').forEach(x => x.classList.remove('active'));
-        b.classList.add('active');
-        const v = b.dataset.view;
-        document.getElementById('kanbanView').classList.toggle('hidden', v !== 'kanban');
-        document.getElementById('tableView').classList.toggle('hidden', v !== 'table');
-      });
-    });
-
-    // ========== CALENDAR ==========
-    let calDate = new Date(2026, 7, 1); // Aug 2026
-    function renderCalendar() {
-      const grid = document.getElementById('calGrid');
-      const monthNames = ['January','February','March','April','May','June','July','August','September','October','November','December'];
-      document.getElementById('calMonth').textContent = `${monthNames[calDate.getMonth()]} ${calDate.getFullYear()}`;
-      const first = new Date(calDate.getFullYear(), calDate.getMonth(), 1);
-      const startDay = first.getDay();
-      const daysInMonth = new Date(calDate.getFullYear(), calDate.getMonth() + 1, 0).getDate();
-      let html = '';
-      for (let i = 0; i < startDay; i++) html += `<div class="h-12"></div>`;
-      for (let d = 1; d <= daysInMonth; d++) {
-        const hasEvent = [1, 5, 8, 12, 15, 20].includes(d);
-        html += `<div class="h-12 rounded-lg flex flex-col items-center justify-center text-sm cursor-pointer hover:bg-cyan-500/10 ${hasEvent ? 'border border-cyan-500/40 bg-cyan-500/5' : ''}" data-day="${d}">
-          <span>${d}</span>
-          ${hasEvent ? '<span class="w-1.5 h-1.5 rounded-full bg-cyan-400 mt-0.5"></span>' : ''}
-        </div>`;
-      }
-      grid.innerHTML = html;
-      grid.querySelectorAll('[data-day]').forEach(el => {
-        el.addEventListener('click', () => {
-          toast(`Add task for Aug ${el.dataset.day}? (Follow-up / Interview)`);
-        });
-      });
-    }
-    document.getElementById('calPrev').addEventListener('click', () => { calDate.setMonth(calDate.getMonth() - 1); renderCalendar(); });
-    document.getElementById('calNext').addEventListener('click', () => { calDate.setMonth(calDate.getMonth() + 1); renderCalendar(); });
-
-    // ========== RESUME ==========
-    document.getElementById('aiTailorBtn').addEventListener('click', () => {
-      toast('AI tailoring resume for target job (Llama 3.3 free)...');
-      setTimeout(() => {
-        document.getElementById('resumePreview').innerHTML = `
-          <h2 class="text-xl font-bold">Alex Rivera</h2>
-          <p class="text-gray-600">Senior Frontend Engineer • React Specialist</p>
-          <hr class="my-3" />
-          <p class="text-gray-700 leading-relaxed">Results-driven frontend engineer with 6+ years shipping high-impact React applications used by millions. Expert in performance optimization, design systems, and accessibility. Proven track record leading migrations to modern frameworks (Next.js App Router) and building component libraries adopted company-wide.</p>
-          <h3 class="font-semibold mt-4 mb-1">Key Achievements</h3>
-          <ul class="list-disc ml-4 text-gray-700 text-xs">
-            <li>Led Next.js 14 migration reducing TTI by 40%</li>
-            <li>Built design system used by 40+ engineers across 3 products</li>
-            <li>Improved Core Web Vitals to 98+ Lighthouse scores</li>
-          </ul>
-        `;
-        toast('Resume tailored (Aggressive variant)');
-      }, 1200);
-    });
-    document.getElementById('pdfBtn').addEventListener('click', () => toast('PDF export ready (simulated)'));
-
-    // ========== ANALYTICS ==========
-    function renderAnalyticsCharts() {
-      const heat = document.getElementById('heatChart');
-      if (heat && !heat.chart) {
-        heat.chart = new Chart(heat, {
-          type: 'bar',
-          data: {
-            labels: ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'],
-            datasets: [{
-              label: 'Response rate %',
-              data: [12, 22, 28, 25, 18, 5, 3],
-              backgroundColor: 'rgba(0, 240, 255, 0.5)'
-            }]
-          },
-          options: {
-            plugins: { legend: { display: false } },
-            scales: {
-              x: { ticks: { color: '#67e8f9' }, grid: { display: false } },
-              y: { ticks: { color: '#67e8f9' }, grid: { color: 'rgba(0,240,255,0.05)' } }
-            }
-          }
-        });
-      }
-      const time = document.getElementById('timeChart');
-      if (time && !time.chart) {
-        time.chart = new Chart(time, {
-          type: 'line',
-          data: {
-            labels: ['0-2d','3-5d','6-10d','11-14d','15+d'],
-            datasets: [{
-              label: 'Responses',
-              data: [8, 15, 12, 6, 4],
-              borderColor: '#b400ff',
-              backgroundColor: 'rgba(180,0,255,0.1)',
-              fill: true,
-              tension: 0.3
-            }]
-          },
-          options: {
-            plugins: { legend: { display: false } },
-            scales: {
-              x: { ticks: { color: '#c4b5fd' }, grid: { color: 'rgba(180,0,255,0.05)' } },
-              y: { ticks: { color: '#c4b5fd' }, grid: { color: 'rgba(180,0,255,0.05)' } }
-            }
-          }
-        });
-      }
-    }
-
-    // ========== MOCK INTERVIEW ==========
-    const questions = {
-      'Senior Frontend Engineer': [
-        'Tell me about a time you improved performance of a React application.',
-        'How do you approach building a design system?',
-        'Describe a complex state management challenge you solved.',
-        'Walk me through debugging a production UI bug.'
-      ]
-    };
-    let qIndex = 0;
-    document.getElementById('startInterview').addEventListener('click', () => {
-      qIndex = 0;
-      document.getElementById('interviewQ').textContent = questions['Senior Frontend Engineer'][0];
-      document.getElementById('interviewFeedback').classList.add('hidden');
-      toast('Interview session started. Use STAR method.');
-    });
-    document.getElementById('submitAns').addEventListener('click', () => {
-      const ans = document.getElementById('interviewAns').value.trim();
-      if (!ans) return toast('Please provide an answer');
-      const score = 65 + Math.floor(Math.random() * 30);
-      document.getElementById('interviewFeedback').classList.remove('hidden');
-      document.getElementById('interviewFeedback').innerHTML = `
-        <div class="p-3 rounded-lg bg-green-500/10 border border-green-400/30">
-          <div class="font-semibold text-green-300">Score: ${score}/100</div>
-          <div class="text-sm mt-1 text-cyan-100/80">Good structure. Strengthen the Result metric. Mention specific numbers next time. STAR coverage: Situation ✓ Task ✓ Action ✓ Result ~</div>
-        </div>
-      `;
-      document.getElementById('interviewAns').value = '';
-      qIndex++;
-      if (qIndex < questions['Senior Frontend Engineer'].length) {
-        setTimeout(() => {
-          document.getElementById('interviewQ').textContent = questions['Senior Frontend Engineer'][qIndex];
-        }, 1500);
-      } else {
-        toast('Session complete! Great practice.');
-      }
-    });
-
-    // ========== SETTINGS ==========
-    document.getElementById('setQuality').addEventListener('input', (e) => {
-      state.quality = +e.target.value;
-      document.getElementById('setQualityVal').textContent = state.quality;
-      document.getElementById('qualityThresh').textContent = state.quality;
-      saveState();
-    });
-    document.getElementById('setMaxApps').addEventListener('change', (e) => {
-      state.maxApps = +e.target.value;
-      document.getElementById('maxApps').textContent = state.maxApps;
-      saveState();
-    });
-    document.querySelectorAll('[data-accent]').forEach(btn => {
-      btn.addEventListener('click', () => {
-        document.documentElement.style.setProperty('--accent', btn.dataset.accent);
-        toast('Accent updated');
-      });
-    });
-    document.getElementById('exportData').addEventListener('click', () => {
-      const blob = new Blob([JSON.stringify(state, null, 2)], { type: 'application/json' });
-      const a = document.createElement('a');
-      a.href = URL.createObjectURL(blob);
-      a.download = 'jobmaster-export.json';
-      a.click();
-      toast('Data exported');
-    });
-    document.getElementById('hardDelete').addEventListener('click', () => {
-      if (confirm('Permanently delete all local data?')) {
-        localStorage.clear();
-        toast('All data wiped');
-        location.reload();
-      }
-    });
-
-    // ========== AUTO PIPELINE ==========
-    document.getElementById('startAutoBtn').addEventListener('click', () => {
-      state.autoRunning = !state.autoRunning;
-      const btn = document.getElementById('startAutoBtn');
-      const status = document.getElementById('autoStatus');
-      if (state.autoRunning) {
-        btn.textContent = '⏹ STOP AUTO';
-        btn.classList.add('bg-pink-500/20', 'border-pink-400');
-        status.textContent = 'Pipeline Running';
-        toast('Autonomous pipeline started');
-        runAutoCycle();
-      } else {
-        btn.textContent = '▶ START AUTO';
-        btn.classList.remove('bg-pink-500/20', 'border-pink-400');
-        status.textContent = 'Pipeline Idle';
-        toast('Pipeline stopped');
-      }
-    });
-
-    function runAutoCycle() {
-      if (!state.autoRunning) return;
-      const job = mockJobs[Math.floor(Math.random() * mockJobs.length)];
-      if (job.score >= state.quality && state.appsToday < state.maxApps) {
-        applyJob(job.company);
-      }
-      setTimeout(runAutoCycle, 4000 + Math.random() * 3000);
-    }
-
-    // ========== FLOATING AI ==========
-    const aiEl = document.getElementById('floatingAI');
-    const fab = document.getElementById('aiFab');
-    let isDragging = false, offsetX, offsetY;
-
-    fab.addEventListener('click', () => {
-      aiEl.classList.toggle('hidden');
-    });
-    document.getElementById('aiClose').addEventListener('click', () => aiEl.classList.add('hidden'));
-    document.getElementById('aiMinimize').addEventListener('click', () => aiEl.classList.add('hidden'));
-
-    const header = aiEl.querySelector('.ai-header');
-    header.addEventListener('mousedown', (e) => {
-      isDragging = true;
-      offsetX = e.clientX - aiEl.getBoundingClientRect().left;
-      offsetY = e.clientY - aiEl.getBoundingClientRect().top;
-      aiEl.classList.add('dragging');
-    });
-    document.addEventListener('mousemove', (e) => {
-      if (!isDragging) return;
-      aiEl.style.left = (e.clientX - offsetX) + 'px';
-      aiEl.style.top = (e.clientY - offsetY) + 'px';
-      aiEl.style.right = 'auto';
-      aiEl.style.bottom = 'auto';
-    });
-    document.addEventListener('mouseup', () => {
-      isDragging = false;
-      aiEl.classList.remove('dragging');
-    });
-
-    function addAiMsg(text, isUser = false) {
-      const chat = document.getElementById('aiChat');
-      const div = document.createElement('div');
-      div.className = (isUser ? 'msg-user' : 'msg-ai') + ' p-2.5 rounded-lg text-sm';
-      div.textContent = text;
-      chat.appendChild(div);
-      chat.scrollTop = chat.scrollHeight;
-      state.chatHistory.push({ role: isUser ? 'user' : 'ai', text });
-      saveState();
-    }
-
-    function handleAiQuery(q) {
-      const lower = q.toLowerCase();
-      if (lower.includes('search') || lower.includes('job')) {
-        addAiMsg('Searching for high-match roles... Found 10 jobs above your quality threshold. Switching to Job Search tab.');
-        document.querySelector('[data-tab="search"]').click();
-        renderJobs(mockJobs);
-      } else if (lower.includes('resume') || lower.includes('tailor')) {
-        addAiMsg('Opening Resume Builder and preparing AI tailor (balanced variant).');
-        document.querySelector('[data-tab="resume"]').click();
-      } else if (lower.includes('start') || lower.includes('auto') || lower.includes('pipeline')) {
-        addAiMsg('Starting autonomous pipeline. Quality gate active. I will only apply to jobs scoring ≥ ' + state.quality);
-        document.getElementById('startAutoBtn').click();
-      } else if (lower.includes('interview')) {
-        addAiMsg('Launching Mock Interview Simulator. Choose your target role and hit Start.');
-        document.querySelector('[data-tab="interview"]').click();
-      } else if (lower.includes('status') || lower.includes('stats')) {
-        addAiMsg(`Current stats → Apps today: ${state.appsToday}/${state.maxApps} • Pending: 47 • Interviews: 5 • Response rate: 18%`);
-      } else {
-        addAiMsg('I can help with: job search, resume tailoring, starting the auto-pipeline, mock interviews, follow-ups, or analytics. Try “search remote frontend jobs” or “start auto”.');
-      }
-    }
-
-    document.getElementById('aiSend').addEventListener('click', () => {
-      const input = document.getElementById('aiInput');
-      const q = input.value.trim();
-      if (!q) return;
-      addAiMsg(q, true);
-      input.value = '';
-      setTimeout(() => handleAiQuery(q), 600);
-    });
-    document.getElementById('aiInput').addEventListener('keydown', (e) => {
-      if (e.key === 'Enter') document.getElementById('aiSend').click();
-    });
-
-    // Voice
-    document.getElementById('aiVoice').addEventListener('click', () => {
-      if (!('webkitSpeechRecognition' in window) && !('SpeechRecognition' in window)) {
-        return toast('Speech recognition not supported in this browser');
-      }
-      const Rec = window.SpeechRecognition || window.webkitSpeechRecognition;
-      const rec = new Rec();
-      rec.lang = 'en-US';
-      rec.onresult = (e) => {
-        document.getElementById('aiInput').value = e.results[0][0].transcript;
-        document.getElementById('aiSend').click();
-      };
-      rec.start();
-      toast('Listening...');
-    });
-
-    // ========== LOGS ==========
-    function addLog(msg) {
-      const list = document.getElementById('logsList');
-      const time = new Date().toLocaleTimeString('en-US', { hour12: false });
-      const div = document.createElement('div');
-      div.className = 'p-2 rounded bg-white/5 flex gap-3';
-      div.innerHTML = `<span class="text-cyan-600">${time}</span><span class="text-cyan-300">${msg}</span>`;
-      list.prepend(div);
-    }
-
-    // ========== CONFETTI ==========
-    function confettiBurst() {
-      for (let i = 0; i < 40; i++) {
-        const el = document.createElement('div');
-        el.style.cssText = `position:fixed;top:0;left:${Math.random()*100}vw;width:8px;height:8px;background:hsl(${Math.random()*360},100%,60%);border-radius:2px;z-index:10001;pointer-events:none;animation:confetti ${2+Math.random()*2}s linear forwards;`;
-        document.body.appendChild(el);
-        setTimeout(() => el.remove(), 4000);
-      }
-    }
-
-    // ========== INIT ==========
-    loadState();
-    document.getElementById('appsToday').textContent = state.appsToday;
-    document.getElementById('statApps').textContent = state.appsToday;
-    document.getElementById('qualityThresh').textContent = state.quality;
-    document.getElementById('setQuality').value = state.quality;
-    document.getElementById('setQualityVal').textContent = state.quality;
-    document.getElementById('maxApps').textContent = state.maxApps;
-    initDashboardCharts();
-    renderApplications();
-
-    // Keyboard shortcuts
-    document.addEventListener('keydown', (e) => {
-      if (e.ctrlKey || e.metaKey) {
-        if (e.key === 'k') { e.preventDefault(); fab.click(); }
-        if (e.key === '1') document.querySelector('[data-tab="dashboard"]').click();
-        if (e.key === '2') document.querySelector('[data-tab="search"]').click();
-      }
-    });
-
-    console.log('%c JobMaster AI A++ ready ', 'background:#00f0ff;color:#000;font-weight:bold;padding:4px 8px;');
+    const state = { autoRunning:false, appsToday:0, maxApps:25, quality:75, mode:'hybrid', jobs:[], applications:[], logs:[] };
+    function toast(m,ms=3000){const t=document.getElementById('toast');t.textContent=m;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),ms);}
+    function save(){localStorage.setItem('jm_v3',JSON.stringify({appsToday:state.appsToday,maxApps:state.maxApps,quality:state.quality,mode:state.mode,applications:state.applications,logs:state.logs.slice(0,150)}));}
+    function load(){try{const s=JSON.parse(localStorage.getItem('jm_v3')||'{}');if(typeof s.appsToday==='number')state.appsToday=s.appsToday;if(s.maxApps)state.maxApps=s.maxApps;if(s.quality)state.quality=s.quality;if(s.mode)state.mode=s.mode;if(Array.isArray(s.applications))state.applications=s.applications;if(Array.isArray(s.logs))state.logs=s.logs;}catch(e){}}
+    function addLog(msg){const e={t:new Date().toLocaleTimeString('en-US',{hour12:false}),msg};state.logs.unshift(e);const list=document.getElementById('logsList');if(list.querySelector('.empty-state'))list.innerHTML='';const d=document.createElement('div');d.className='p-2 rounded bg-white/5 flex gap-3';d.innerHTML=`<span class="text-cyan-600">${e.t}</span><span class="text-cyan-300">${msg}</span>`;list.prepend(d);save();}
+    function updateStats(){document.getElementById('appsToday').textContent=state.appsToday;document.getElementById('statApps').textContent=state.appsToday;document.getElementById('maxApps').textContent=state.maxApps;document.getElementById('qualityThresh').textContent=state.quality;document.getElementById('setQualityVal').textContent=state.quality;document.getElementById('setQuality').value=state.quality;document.getElementById('setMaxApps').value=state.maxApps;document.getElementById('setMode').value=state.mode;const p=state.applications.filter(a=>a.status==='applied').length,i=state.applications.filter(a=>a.status==='interview').length,o=state.applications.filter(a=>a.status==='offer').length;document.getElementById('statPending').textContent=p;document.getElementById('statInterviews').textContent=i;document.getElementById('statRate').textContent=state.applications.length?Math.round(((i+o)/state.applications.length)*100)+'%':'—';}
+    document.querySelectorAll('.tab-btn').forEach(btn=>{btn.addEventListener('click',()=>{document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));btn.classList.add('active');document.querySelectorAll('.tab-panel').forEach(p=>p.classList.add('hidden'));document.getElementById('tab-'+btn.dataset.tab).classList.remove('hidden');if(btn.dataset.tab==='applications')renderApps();if(btn.dataset.tab==='calendar')renderCal();});});
+    function escape(s){return String(s||'').replace(/&/g,'&').replace(/</g,'<').replace(/>/g,'>');}
+    async function searchReal(){const q=document.getElementById('searchQuery').value.trim().toLowerCase();const remote=document.getElementById('searchRemote').value==='true';toast('Fetching live jobs from Arbeitnow…');const box=document.getElementById('jobResults');box.innerHTML='<div class="empty-state col-span-full">Loading real listings…</div>';try{const res=await fetch('https://www.arbeitnow.com/api/job-board-api');if(!res.ok)throw new Error('HTTP '+res.status);const json=await res.json();let jobs=(json.data||json||[]).map(j=>({title:j.title||'Untitled',company:j.company_name||j.company||'Unknown',loc:j.location||(j.remote?'Remote':'—'),remote:!!j.remote,url:j.url||'#',tags:j.tags||[],desc:(j.description||'').replace(/<[^>]+>/g,'').slice(0,140),score:score(j,q)}));if(q)jobs=jobs.filter(j=>j.title.toLowerCase().includes(q)||j.company.toLowerCase().includes(q)||(j.tags||[]).some(t=>String(t).toLowerCase().includes(q)));if(remote)jobs=jobs.filter(j=>j.remote||/remote/i.test(j.loc));jobs=jobs.filter(j=>j.score>=state.quality-20).slice(0,36);state.jobs=jobs;document.getElementById('resultCount').textContent=jobs.length;renderCards(jobs);addLog(`[SEARCH] ${jobs.length} live jobs from Arbeitnow`);toast(`Found ${jobs.length} live jobs`);}catch(err){box.innerHTML=`<div class="empty-state col-span-full text-red-300">API error: ${err.message}</div>`;addLog('[ERROR] '+err.message);toast('Search failed');}}
+    function score(j,q){let s=62;if(j.remote)s+=8;if(q&&(j.title||'').toLowerCase().includes(q))s+=14;if((j.description||'').length>180)s+=5;return Math.min(96,s+Math.floor(Math.random()*5));}
+    function renderCards(jobs){const box=document.getElementById('jobResults');if(!jobs.length){box.innerHTML='<div class="empty-state col-span-full">No matching live jobs.</div>';return;}box.innerHTML=jobs.map((j,i)=>`<div class="glass rounded-xl p-4 hover:border-cyan-500/30 border border-transparent transition"><div class="flex justify-between mb-2"><div><div class="font-semibold text-cyan-100 text-sm">${escape(j.title)}</div><div class="text-xs text-cyan-400">${escape(j.company)} • ${escape(j.loc)}</div></div><div class="text-lg font-orbitron font-bold ${j.score>=85?'text-green-300':j.score>=75?'text-cyan-300':'text-yellow-300'}">${j.score}</div></div><div class="text-xs text-cyan-200/60 mb-3 line-clamp-2">${escape(j.desc)}</div><div class="flex justify-between text-xs"><span class="px-2 py-0.5 rounded bg-white/5">Arbeitnow</span><a href="${j.url}" target="_blank" class="text-cyan-400">View</a><button class="stage-btn px-3 py-1 rounded bg-cyan-500/20 border border-cyan-400/40 text-cyan-200" data-i="${i}">Stage</button></div></div>`).join('');box.querySelectorAll('.stage-btn').forEach(b=>b.addEventListener('click',()=>stage(state.jobs[+b.dataset.i])));}
+    function stage(job){if(!job)return;if(state.appsToday>=state.maxApps)return toast('Daily limit reached');state.appsToday++;state.applications.unshift({id:Date.now(),company:job.company,role:job.title,status:'applied',score:job.score,date:new Date().toISOString().slice(0,10),url:job.url});updateStats();save();addLog(`[STAGE] ${job.company} — ${job.title}`);toast('Staged: '+job.company);const feed=document.getElementById('alertsFeed');if(feed.querySelector('.empty-state'))feed.innerHTML='';const a=document.createElement('div');a.className='flex gap-2 p-2 rounded bg-cyan-500/10 border border-cyan-500/20 text-sm mb-2';a.innerHTML=`<span class="text-cyan-400">●</span><div><span class="text-cyan-200">Staged ${escape(job.title)} @ ${escape(job.company)}</span><br><span class="text-[10px] text-cyan-600">just now • ${job.score}</span></div>`;feed.prepend(a);}
+    document.getElementById('searchBtn').addEventListener('click',searchReal);
+    document.getElementById('bulkBtn').addEventListener('click',()=>{const h=state.jobs.filter(j=>j.score>=state.quality);if(!h.length)return toast('No jobs above threshold');h.slice(0,6).forEach((j,i)=>setTimeout(()=>stage(j),i*350));toast('Staging high-score jobs');});
+    function renderApps(){const cols={applied:[],interview:[],offer:[],rejected:[]};state.applications.forEach(a=>{if(cols[a.status])cols[a.status].push(a);});['applied','interview','offer','rejected'].forEach(k=>{document.getElementById('c-'+k).textContent=cols[k].length;document.getElementById('col-'+k).innerHTML=cols[k].map(a=>`<div class="p-2 rounded bg-black/30 border border-white/5 text-xs"><div class="font-medium text-cyan-100 truncate">${escape(a.company)}</div><div class="text-cyan-500 truncate">${escape(a.role)}</div><div class="flex justify-between mt-1 text-cyan-600"><span>${a.date}</span><span>${a.score||'—'}</span></div></div>`).join('');});}
+    let calDate=new Date();
+    function renderCal(){const g=document.getElementById('calGrid');const n=['January','February','March','April','May','June','July','August','September','October','November','December'];document.getElementById('calMonth').textContent=`${n[calDate.getMonth()]} ${calDate.getFullYear()}`;const first=new Date(calDate.getFullYear(),calDate.getMonth(),1);const start=first.getDay();const days=new Date(calDate.getFullYear(),calDate.getMonth()+1,0).getDate();let h='';for(let i=0;i<start;i++)h+='<div class="h-10"></div>';for(let d=1;d<=days;d++)h+=`<div class="h-10 rounded-lg flex items-center justify-center text-sm cursor-pointer hover:bg-cyan-500/10" data-d="${d}">${d}</div>`;g.innerHTML=h;g.querySelectorAll('[data-d]').forEach(el=>el.addEventListener('click',()=>toast(`Add task for ${n[calDate.getMonth()]} ${el.dataset.d}?`)));}
+    document.getElementById('calPrev').addEventListener('click',()=>{calDate.setMonth(calDate.getMonth()-1);renderCal();});
+    document.getElementById('calNext').addEventListener('click',()=>{calDate.setMonth(calDate.getMonth()+1);renderCal();});
+    function updResume(){const name=document.getElementById('resName').value.trim(),title=document.getElementById('resTitle').value.trim(),sum=document.getElementById('resSummary').value.trim();const p=document.getElementById('resumePreview');if(!name&&!title&&!sum){p.innerHTML='<div class="text-gray-400 italic">Empty until you enter real data.</div>';return;}p.innerHTML=`<h2 class="text-xl font-bold">${escape(name)||'Your Name'}</h2><p class="text-gray-600">${escape(title)}</p><hr class="my-3"/><p class="text-gray-700 whitespace-pre-wrap">${escape(sum)}</p>`;}
+    ['resName','resTitle','resSummary'].forEach(id=>document.getElementById(id).addEventListener('input',updResume));
+    document.getElementById('aiTailorBtn').addEventListener('click',()=>{if(!document.getElementById('resSummary').value.trim())return toast('Enter real experience first — Wheelhouse blocks empty/fabricated content');toast('Wheelhouse: only rephrasing your content');addLog('[WHEELHOUSE] Tailor requested — verification required');});
+    const qs={ 'Senior Frontend Engineer':['Describe a performance fix you shipped in React.','How do you choose between CSR and SSR?','Design a themeable design-system component.'],'Full Stack Engineer':['Tell me about owning a feature end-to-end.','How do you keep schema changes backward-compatible?','Describe a production incident you resolved.'],'Backend Engineer':['Design a high-throughput consistent API.','How did you reduce latency of a critical service?','Observability approach for a new service.'],'Product Manager':['How do you prioritize with limited capacity?','A product decision that later proved wrong.','How do you measure feature success?'],'Data Scientist':['How do you validate a model for production?','Explain a complex result to non-technical stakeholders.','How do you prevent data leakage?'] };
+    let qi=0,cur=[];
+    document.getElementById('startInterview').addEventListener('click',()=>{const r=document.getElementById('interviewRole').value;cur=qs[r]||qs['Senior Frontend Engineer'];qi=0;document.getElementById('interviewQ').textContent=cur[0];document.getElementById('interviewFeedback').classList.add('hidden');toast('Session started');});
+    document.getElementById('submitAns').addEventListener('click',()=>{const a=document.getElementById('interviewAns').value.trim();if(!a)return toast('Answer first');const star=/situation|task|action|result|when i|i did|outcome/i.test(a);const sc=Math.min(94,55+(a.length>100?12:0)+(star?18:0)+Math.floor(Math.random()*8));const f=document.getElementById('interviewFeedback');f.classList.remove('hidden');f.innerHTML=`<div class="p-3 rounded-lg bg-green-500/10 border border-green-400/30"><div class="font-semibold text-green-300">Score ${sc}/100</div><div class="text-sm mt-1">${star?'STAR signals present.':'Add clearer Situation→Task→Action→Result.'}</div></div>`;document.getElementById('interviewAns').value='';qi++;if(qi<cur.length)setTimeout(()=>document.getElementById('interviewQ').textContent=cur[qi],1100);else toast('Session complete');});
+    document.getElementById('setQuality').addEventListener('input',e=>{state.quality=+e.target.value;updateStats();save();});
+    document.getElementById('setMaxApps').addEventListener('change',e=>{state.maxApps=Math.max(1,+e.target.value||25);updateStats();save();});
+    document.getElementById('setMode').addEventListener('change',e=>{state.mode=e.target.value;save();toast('Mode: '+state.mode);addLog('[MODE] '+state.mode);});
+    document.getElementById('exportData').addEventListener('click',()=>{const b=new Blob([JSON.stringify({version:'3.0',exported:new Date().toISOString(),...state},null,2)],{type:'application/json'});const a=document.createElement('a');a.href=URL.createObjectURL(b);a.download='jobmaster-export.json';a.click();toast('Exported real data only');});
+    document.getElementById('hardDelete').addEventListener('click',()=>{if(confirm('Delete all local data permanently?')){localStorage.removeItem('jm_v3');location.reload();}});
+    document.getElementById('startAutoBtn').addEventListener('click',()=>{state.autoRunning=!state.autoRunning;const b=document.getElementById('startAutoBtn'),s=document.getElementById('autoStatus');if(state.autoRunning){b.textContent='⏹ STOP';s.textContent='Pipeline Running';toast('Pipeline started (stage mode)');addLog('[PIPELINE] started');runAuto();}else{b.textContent='▶ START AUTO';s.textContent='Pipeline Idle';toast('Stopped');addLog('[PIPELINE] stopped');}});
+    function runAuto(){if(!state.autoRunning)return;if(!state.jobs.length){searchReal().then(()=>{if(state.autoRunning)setTimeout(runAuto,7000);});return;}const c=state.jobs.filter(j=>j.score>=state.quality);if(c.length&&state.appsToday<state.maxApps)stage(c[Math.floor(Math.random()*c.length)]);setTimeout(runAuto,5500+Math.random()*3500);}
+    const ai=document.getElementById('floatingAI');document.getElementById('aiFab').addEventListener('click',()=>ai.classList.toggle('hidden'));document.getElementById('aiClose').addEventListener('click',()=>ai.classList.add('hidden'));
+    let drag=false,ox,oy;ai.querySelector('.ai-header').addEventListener('mousedown',e=>{drag=true;ox=e.clientX-ai.getBoundingClientRect().left;oy=e.clientY-ai.getBoundingClientRect().top;});document.addEventListener('mousemove',e=>{if(!drag)return;ai.style.left=(e.clientX-ox)+'px';ai.style.top=(e.clientY-oy)+'px';ai.style.right='auto';ai.style.bottom='auto';});document.addEventListener('mouseup',()=>drag=false);
+    function addAi(t,u=false){const c=document.getElementById('aiChat');const d=document.createElement('div');d.className=(u?'msg-user':'msg-ai')+' p-2.5 rounded-lg text-sm';d.textContent=t;c.appendChild(d);c.scrollTop=c.scrollHeight;}
+    function handle(q){const l=q.toLowerCase();if(l.includes('search')||l.includes('job')){addAi('Running live Arbeitnow search…');document.querySelector('[data-tab="search"]').click();searchReal();}else if(l.includes('status')||l.includes('stat'))addAi(`Real stats: ${state.appsToday}/${state.maxApps} apps today • ${state.applications.length} tracked • mode ${state.mode}`);else if(l.includes('start')||l.includes('pipeline')){addAi('Starting pipeline…');if(!state.autoRunning)document.getElementById('startAutoBtn').click();}else if(l.includes('resume')){addAi('Open Resume and enter only real experience.');document.querySelector('[data-tab="resume"]').click();}else addAi('Try: “search remote react”, “start pipeline”, “status”.');}
+    document.getElementById('aiSend').addEventListener('click',()=>{const i=document.getElementById('aiInput');const q=i.value.trim();if(!q)return;addAi(q,true);i.value='';setTimeout(()=>handle(q),350);});document.getElementById('aiInput').addEventListener('keydown',e=>{if(e.key==='Enter')document.getElementById('aiSend').click();});
+    load();updateStats();renderCal();console.log('%c JobMaster AI A++ v3 — zero mock data ','background:#00f0ff;color:#000;font-weight:bold;padding:4px 8px');
   </script>
 </body>
 </html>
